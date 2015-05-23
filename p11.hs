@@ -18,3 +18,25 @@ grid =[[08, 02, 22, 97, 38, 15, 00, 40, 00, 75, 04, 05, 07, 78, 52, 12, 50, 77, 
       ,[20, 69, 36, 41, 72, 30, 23, 88, 34, 62, 99, 69, 82, 67, 59, 85, 74, 04, 36, 16]
       ,[20, 73, 35, 29, 78, 31, 90, 01, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57, 05, 54]
       ,[01, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 01, 89, 19, 67, 48]]
+
+get :: Int -> Int -> Int
+get row col
+  |row < 0 || row > 19 || col < 0 || col > 19 = 0
+  |otherwise = (grid !! row) !! col
+
+getV :: Int -> Int -> [Int]
+getV row col = map ($ col) [get row, get (row + 1), get (row + 2), get (row + 3)]
+
+getH :: Int -> Int -> [Int]
+getH row col = map (get row) [col, col + 1, col + 2, col + 3]
+
+getDR :: Int -> Int -> [Int]
+getDR row col = [get row col, get (row + 1) (col + 1), get (row + 2) (col + 2), get (row + 3) (col + 3)]
+
+getUR :: Int -> Int -> [Int]
+getUR row col = [get row col, get (row - 1) (col + 1), get (row -2) (col + 2), get (row - 3) (col + 3)]
+
+maxProd :: Int -> Int -> Int
+maxProd row col = maximum (map product [getV row col, getH row col, getDR row col, getUR row col])
+
+result  = maximum [maxProd row col | row <- [0..19], col <- [0..19]]
