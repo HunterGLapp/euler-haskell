@@ -14,6 +14,6 @@ isAbundant n = status n == Abundant
 
 abundants = filter isAbundant nats where nats = [1..]
                                       
-sumOfAbundants = [(x + y) |x <- abundants, y <- abundants,  x + y < 28123]
+sumOfAbundants = [(x + y) | x <- abundants, y <- abundants, x + y < 28123]
 
 result = sum ((\\) [x | x <- [1 .. 28123]]  sumOfAbundants)
